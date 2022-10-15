@@ -10,6 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ChatMessage {
+
+    public enum MessageType {
+        ENTER, TALK
+    }
+
+    private MessageType type;
+    private String roomId;
     private String sender;
-    private String context;
+    private String message;
 }
