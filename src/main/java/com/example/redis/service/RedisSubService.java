@@ -26,7 +26,6 @@ public class RedisSubService implements MessageListener {
             messageList.add(message.toString());
 
             log.info("받은 메세지 {}", message.toString());
-            log.info("sender : {}, context : {}", chatMessage.getSender(), chatMessage.getContext());
         } catch (IOException e) {
             e.printStackTrace();
         }
