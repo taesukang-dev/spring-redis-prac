@@ -1,21 +1,21 @@
 package com.example.redis.configuration;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
 
-@RequiredArgsConstructor
-@EnableWebSocket
+@EnableWebSocketMessageBroker
 @Configuration
-public class WebSockConfig implements WebSocketConfigurer {
-    // handler 등록
-
-    private final WebSockChatHandler webSockChatHandler;
+public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker("/sub");
+        registry.setApplicationDestinationPrefixes("/pub");
+    }
 
     @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSockChatHandler, "/ws/chat").setAllowedOrigins("*");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/ws-stomp").setAllowedOrigins("*")
+                .withSockJS();
     }
 }
