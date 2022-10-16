@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(allowedHeaders = "*", origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("/chat")
 @RestController
