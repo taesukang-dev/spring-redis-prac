@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatRoom {
+public class ChatRoom implements Serializable {
     private String roomId;
     private String name;
 

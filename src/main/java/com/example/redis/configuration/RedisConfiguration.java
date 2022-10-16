@@ -46,7 +46,7 @@ public class RedisConfiguration {
     RedisMessageListenerContainer redisContainer() { // JMS 메시징을 사용하는 컴포넌트, 비동기 메세지를 받는데 사용
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisConnectionFactory());
-        container.addMessageListener(messageListenerAdapter(), topic());
+//        container.addMessageListener(messageListenerAdapter(), topic());
         return container;
     }
 
@@ -67,6 +67,15 @@ public class RedisConfiguration {
     @Bean
     public RedisTemplate<String, User> userRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, User> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<User>(User.class));
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<User>(User.class));
